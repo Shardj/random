@@ -11,6 +11,6 @@ Random files
     # io / drive usage
     iotop
     # git status of current directory every 5 seconds
-    while sleep 5; do clear; git status; tput setaf 6; echo " - - - - Main Pi Vagrant Box Git Status - - - - "; tput sgr0; done
+    output=""; while sleep 5; do output=$(git status); clear; echo "$output"; tput setaf 6; echo " - - - - Main Pi Vagrant Box Git Status - - - - "; tput sgr0; done
 
 
