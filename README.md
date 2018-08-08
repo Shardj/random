@@ -7,7 +7,7 @@ Random files
     # processes and other bits and bobs (love you htop)
     top or htop
     # memory details
-    tput setaf 10; while sleep 0.25; do echo " - - - - vmstat - - - - "; vmstat -a -S M 1 1; done
+    while sleep 0.25; do tput setaf 10; echo " - - - - vmstat - - - - "; tput setaf 14; vmstat -a -S M 1 1; tput sgr0; done
     # io / drive usage
     iotop
     # git status of current directory every 5 seconds
