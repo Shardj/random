@@ -136,4 +136,6 @@ alias phinx-full='vendor/bin/phinx rollback && vendor/bin/phinx migrate && vendo
 alias monitor-gitstatus='while sleep 5; do output=$(git status); clear; echo "$output"; tput setaf 6; echo " - - - - Main Pi Vagrant Box Git Status - - - - "; tput sgr0; done'
 alias monitor-vmstat='while sleep 0.25; do tput setaf 10; echo " - - - - vmstat - - - - "; tput setaf 14; vmstat -a -S M 1 1; tput sgr0; done'
 
+# tmux setup for vertial 1440p monitor
+alias tmux-full='tmux start-server \; new-session \; send-keys "htop" C-m \; split-window -v\; split-window -h \; send-keys "cd Development/pi; clear" C-m \; split-window -v\; send-keys "cd Development/pi; clear" C-m \; select-pane -t 0\; split-window -v\; split-window -h -p 55\; send-keys "sudo iotop" C-m \; split-window -v -p 15\; send-keys "monitor-vmstat" C-m \; select-pane -L\; send-keys "cd Development/pi/checkout; clear; monitor-gitstatus" C-m \; split-window -v -p 35\; send-keys "nload" C-m \;'
 
