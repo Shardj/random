@@ -14,3 +14,6 @@ Random files
     while sleep 5; do output=$(git status); clear; echo "$output"; tput setaf 6; echo " - - - - Main Pi Vagrant Box Git Status - - - - "; tput sgr0; done
 
 
+# Other singleline bash
+    # pointless but fancy git window for current directory
+    while true; do tput setaf 10; printf "\n - - - - Git Management - - - - \n"; tput setaf 14; printf "Input git command: "; tput sgr0; read command; clear; tput setaf 14; printf "Running: "; tput sgr0; printf "git $command\n\n"; eval "git $command"; done
