@@ -139,3 +139,5 @@ alias monitor-vmstat='while sleep 0.25; do tput setaf 10; echo " - - - - vmstat 
 # tmux setup for vertial 1440p monitor
 alias tmux-full='tmux start-server \; new-session \; send-keys "htop" C-m \; splitw -v\; splitw -h \; send-keys "cd Development/pi; clear" C-m \; splitw -v\; send-keys "cd Development/pi; clear" C-m \; selectp -t 0\; splitw -v\; splitw -h -p 55\; send-keys "sudo iotop" C-m \; splitw -v -p 15\; send-keys "monitor-vmstat" C-m \; selectp -L\; send-keys "cd Development/pi/checkout; clear; monitor-gitstatus" C-m \; splitw -v -p 35\; send-keys "nload" C-m \;'
 
+# run phpunit
+alias debug-full=vendor/bin/phpunit --bootstrap tests/unit/bootstrap.php -c tests/unit/phpunit.xml
