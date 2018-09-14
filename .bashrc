@@ -130,7 +130,7 @@ shopt -s histappend
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # phinx shortcut
-alias phinx-full='vendor/bin/phinx rollback && vendor/bin/phinx migrate && vendor/bin/phinx seed:run'
+alias phinx-full='vendor/bin/phinx rollback -t 0 && vendor/bin/phinx migrate && vendor/bin/phinx seed:run'
 
 # monitoring shortcuts
 alias monitor-gitstatus='while sleep 5; do output=$(git status); clear; echo "$output"; tput setaf 6; echo " - - - - Main Pi Vagrant Box Git Status - - - - "; tput sgr0; done'
