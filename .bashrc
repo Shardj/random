@@ -8,6 +8,10 @@ case $- in
       *) return;;
 esac
 
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 
@@ -112,14 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-#JDK Home path
-JAVA_HOME=/usr/java/jre1.8.0_171
-PATH=$JAVA_HOME/bin:/$PATH
-
 # avoid duplicates..
 export HISTCONTROL=ignoreboth:erasedups
 
@@ -129,15 +125,8 @@ shopt -s histappend
 # After each command, save and reload history
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
-# phinx shortcut
-alias phinx-full='vendor/bin/phinx rollback -t 0 && vendor/bin/phinx migrate && vendor/bin/phinx seed:run'
+alias spawn='docker exec -it webapp bash'
 
-# monitoring shortcuts
-alias monitor-gitstatus='while sleep 5; do output=$(git status); clear; echo "$output"; tput setaf 6; echo " - - - - Main Pi Vagrant Box Git Status - - - - "; tput sgr0; done'
-alias monitor-vmstat='while sleep 0.25; do tput setaf 10; echo " - - - - vmstat - - - - "; tput setaf 14; vmstat -a -S M 1 1; tput sgr0; done'
-
-# tmux setup for vertial 1440p monitor
-alias tmux-full='tmux start-server \; new-session \; send-keys "htop" C-m \; splitw -v\; splitw -h \; send-keys "cd Development/pi; clear" C-m \; splitw -v\; send-keys "cd Development/pi; clear" C-m \; selectp -t 0\; splitw -v\; splitw -h -p 55\; send-keys "sudo iotop" C-m \; splitw -v -p 15\; send-keys "monitor-vmstat" C-m \; selectp -L\; send-keys "cd Development/pi/checkout; clear; monitor-gitstatus" C-m \; splitw -v -p 35\; send-keys "nload" C-m \;'
-
-# run phpunit
-alias debug-full=vendor/bin/phpunit --bootstrap tests/unit/bootstrap.php -c tests/unit/phpunit.xml
+alias dwarffortress='~/df_linux/dfhack'
+alias dwarftherapist='sudo ~/df_linux/DwarfTherapist.AppImage'
+alias ecrlogin='$(aws ecr get-login --no-include-email --region eu-west-1)'
