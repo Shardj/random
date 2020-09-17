@@ -1,0 +1,7 @@
+alias docker-cleanup='docker-stop-all; docker-rm-all; docker-rmi-all'
+alias docker-compose-reload='docker-compose down; docker-compose build; docker-compose up -d'
+alias docker-rm-all='docker rm $(docker ps -a -q)'
+alias docker-rmi-all='docker rmi $(docker images -q)'
+alias docker-spawn-cli='docker exec -it cli bash'
+alias docker-stop-all='docker stop $(docker ps -a -q)'
+alias spawn='docker exec -it cli bash'
