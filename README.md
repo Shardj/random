@@ -1,5 +1,5 @@
 # random
-Random files
+Random files. Literally just a bunch of stuff I wanted to be able to move between computers. Mostly linux bash stuff.
 
 # Monitoring:
     # network
