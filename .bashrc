@@ -31,24 +31,54 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Custom prompt formatting
-#Get git branch name
-parse_git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+#!/bin/bash
+
+# Source aliases definitions
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+function git_color {
+    local COLOR_RED="\033[0;31m"
+    local COLOR_YELLOW="\033[0;33m"
+    local COLOR_GREEN="\033[0;32m"
+    local COLOR_OCHRE="\033[38;5;95m"
+    local git_status="$(git status 2> /dev/null)"
+
+    if [[ ! $git_status =~ "working directory clean" ]]; then
+        echo -e $COLOR_RED
+    elif [[ $git_status =~ "Your branch is ahead of" ]]; then
+        echo -e $COLOR_YELLOW
+    elif [[ $git_status =~ "nothing to commit" ]]; then
+        echo -e $COLOR_GREEN
+    else
+        echo -e $COLOR_OCHRE
+    fi
 }
 
-#Customize shell prompt
+# Get git info
+parse_git_info() {
+    local COLOR_RESET="\033[0m"
+    local GIT_COLOR="$(git_color)"
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        echo -e "($(basename -s .git `git config --get remote.origin.url`):${GIT_COLOR} $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')${COLOR_RESET})"
+    fi
+}
+
+# Customize shell prompt
 function prompt
 {
-        #Colors for prompt, see ecpape secuences for colors
-        local WHITE="\[\033[1;37m\]"
-        local GREEN="\[\033[0;32m\]"
-        #Escape codes
-        local TIME="\A"
-        local USER="\u"
-        local HOST="\h"
-        local PWD="\W"
-        local FULL_PWD="\w"
-        export PS1="[${USER}:${GREEN}${FULL_PWD}${WHITE}]\$(parse_git_branch) \$ "
+    # Colors for prompt, see ecpape secuences for colors
+    local WHITE="\[\033[1;37m\]"
+    local GREEN="\[\033[0;32m\]"
+    local COLOR_RESET="\[\033[0m\]"
+    # Escape codes
+    local TIME="\A"
+    local USER="\u"
+    local HOST="\h"
+    local PWD="\W"
+    local FULL_PWD="\w"
+    export PS1="[${USER}:${GREEN}${FULL_PWD}${COLOR_RESET}]\$(parse_git_info) ${COLOR_RESET}\$ "
 }
 prompt
 # Custom prompt formatting end
