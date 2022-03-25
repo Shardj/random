@@ -31,13 +31,6 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Custom prompt formatting
-#!/bin/bash
-
-# Source aliases definitions
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 function git_color {
     local COLOR_RED="\033[0;31m"
     local COLOR_YELLOW="\033[0;33m"
@@ -56,29 +49,36 @@ function git_color {
     fi
 }
 
-# Get git info
-parse_git_info() {
-    local COLOR_RESET="\033[0m"
-    local GIT_COLOR="$(git_color)"
+if_in_repo() {
     if git rev-parse --git-dir > /dev/null 2>&1; then
-        echo -e "($(basename -s .git `git config --get remote.origin.url`):${GIT_COLOR} $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')${COLOR_RESET})"
+        echo $1
+    fi
+}
+parse_branch() {
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+    fi
+}
+parse_repo_name() {
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "$(basename -s .git `git config --get remote.origin.url`)"
     fi
 }
 
-# Customize shell prompt
 function prompt
 {
-    # Colors for prompt, see ecpape secuences for colors
+    # Colors for prompt, see escape secuences for colors
     local WHITE="\[\033[1;37m\]"
     local GREEN="\[\033[0;32m\]"
     local COLOR_RESET="\[\033[0m\]"
+    local GIT_COLOR="\[$(git_color)\]"
     # Escape codes
     local TIME="\A"
     local USER="\u"
     local HOST="\h"
     local PWD="\W"
     local FULL_PWD="\w"
-    export PS1="[${USER}:${GREEN}${FULL_PWD}${COLOR_RESET}]\$(parse_git_info) ${COLOR_RESET}\$ "
+    export PS1="[${USER}:${GREEN}${FULL_PWD}${COLOR_RESET}]\$(if_in_repo '(')\$(parse_repo_name)\$(if_in_repo ': ')${GIT_COLOR}\$(parse_branch)${COLOR_RESET}\$(if_in_repo ')') \$ "
 }
 prompt
 # Custom prompt formatting end
