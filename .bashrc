@@ -71,14 +71,13 @@ function prompt
     local WHITE="\[\033[1;37m\]"
     local GREEN="\[\033[0;32m\]"
     local COLOR_RESET="\[\033[0m\]"
-    local GIT_COLOR="\[$(git_color)\]"
     # Escape codes
     local TIME="\A"
     local USER="\u"
     local HOST="\h"
     local PWD="\W"
     local FULL_PWD="\w"
-    export PS1="[${USER}:${GREEN}${FULL_PWD}${COLOR_RESET}]\$(if_in_repo '(')\$(parse_repo_name)\$(if_in_repo ': ')${GIT_COLOR}\$(parse_branch)${COLOR_RESET}\$(if_in_repo ')') \$ "
+    export PS1="[${USER}:${GREEN}${FULL_PWD}${COLOR_RESET}]\$(if_in_repo '(')\$(parse_repo_name)\$(if_in_repo ': ')\[\$(git_color)\]\$(parse_branch)${COLOR_RESET}\$(if_in_repo ')') \$ "
 }
 prompt
 # Custom prompt formatting end
