@@ -3,4 +3,5 @@
         name = {Fill in your name}
 [color]
         status = always
-        
+[push]
+        default = current
