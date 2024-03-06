@@ -144,8 +144,4 @@ shopt -s histappend
 # After each command, save and reload history
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
-alias spawn='docker exec -it webapp bash'
-
-alias dwarffortress='~/df_linux/dfhack'
-alias dwarftherapist='sudo ~/df_linux/DwarfTherapist.AppImage'
-alias ecrlogin='$(aws ecr get-login --no-include-email --region eu-west-1)'
+export PATH="$PATH:/home/georgea/.local/bin"
