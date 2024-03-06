@@ -4,6 +4,7 @@ alias docker-rm-all='docker rm $(docker ps -a -q)'
 alias docker-rmi-all='docker rmi $(docker images -q)'
 alias docker-spawn-cli='docker exec -it cli bash'
 alias docker-stop-all='docker stop $(docker ps -a -q)'
+alias ecrlogin='$(aws ecr get-login --no-include-email --region eu-west-1)'
 function spawn {
   if docker exec $1 sh -c 'which bash'; then
     echo "Container has bash"
